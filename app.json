@@ -1,0 +1,44 @@
+{
+  "name": "My Flask App",
+  "description": "A Flasky App.",
+  "repository": "https://github.com/austinmcconnell/myflaskapp",
+  "success_url": "/",
+  "env": {
+    "FLASK_APP": "autoapp.py",
+    "FLASK_DEBUG": "0",
+    "NODE_ENV": "development",
+    "NPM_CONFIG_PRODUCTION": "false",
+    "SECRET_TOKEN": {
+      "description": "A secret key for verifying the integrity of signed cookies.",
+      "generator": "secret"
+    },
+    "WEB_CONCURRENCY": {
+      "description": "The number of processes to run.",
+      "value": "3"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "image": "heroku/python",
+  "addons": [
+    {
+      "plan": "heroku-postgresql:hobby-dev",
+      "options": {
+        "version": "9.6"
+      }
+    },
+    "rollbar"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
