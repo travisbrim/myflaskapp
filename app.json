@@ -31,7 +31,8 @@
         "version": "9.6"
       }
     },
-    "rollbar"
+    "rollbar",
+    "papertrail"
   ],
   "buildpacks": [
     {
