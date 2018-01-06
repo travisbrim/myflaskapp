@@ -34,7 +34,8 @@ class ProdConfig(Config):
         DB_PORT = os.getenv('DB_PORT', 5432)
         DB_NAME = os.getenv('DB_NAME')
         SQLALCHEMY_DATABASE_URI = f'postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
-    ROLLBAR_API = 'api_string'  # TODO: Change me
+    ROLLBAR_API = os.getenv('ROLLBAR_ACCESS_TOKEN')
+    PAPERTRAIL_API = os.getenv('PAPERTRAIL_API_TOKEN')
 
 
 class DevConfig(Config):

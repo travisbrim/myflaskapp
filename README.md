@@ -59,6 +59,8 @@ app\'s database tables and perform the initial migration :
 Deployment To Heroku
 --------------------
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 ### Install Heroku Toolbelt
 
 

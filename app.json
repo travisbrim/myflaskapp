@@ -1,6 +1,6 @@
 {
   "name": "My Flask App",
-  "description": "A Flasky App.",
+  "description": "A flasky app.",
   "repository": "https://github.com/austinmcconnell/myflaskapp",
   "success_url": "/",
   "env": {

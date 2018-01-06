@@ -26,7 +26,7 @@ def create_app(config_object=ProdConfig):
     @app.before_first_request
     def init_rollbar():
         """init rollbar module"""
-        if app.config['ENV'] in ('production',):
+        if app.config['ENV'] in ('production',) and app.config['ROLLBAR_API']:
             rollbar.init(access_token=app.config['ROLLBAR_API'],
                          environment=app.config['ENV'],
                          root=app.config['APP_DIR'],
