@@ -59,26 +59,31 @@ app\'s database tables and perform the initial migration :
 Deployment To Heroku
 --------------------
 
+
+### Automatic Deployment
+
+If this project repo is on GitHub, you can automatically deploy to Heroku using this button. All you need to do is fill in an app name on the deployment screen.
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-### Install Heroku Toolbelt
+### Manual Installation
 
+#### Install Heroku Toolbelt
 
 	brew install heroku
 
-
-### Authenticate with `heroku login`
+#### Authenticate with `heroku login`
  You only need to do this once.
 
  	heroku login
 
-### Create Heroku Project
+#### Create Heroku Project
 
 	heroku create My Flask App
 
 Note: you can leave the project name off and just use `heroku create` and you'll get a randomly named app.
 
-### Set Environment Variables
+#### Set Environment Variables
 
 	heroku config:set NODE_ENV=development NPM_CONFIG_PRODUCTION=false
 
@@ -89,7 +94,7 @@ This will tell Heroku to install all devDependencies as well as the dependencies
 
 This sets the pertinent Flask env variables on your heroku dyno.
 
-### Use Webpack to Build Static Assets on Deploy
+#### Use Webpack to Build Static Assets on Deploy
 
 If you intend to use webpack to build your static assets on deploy to Heroku, make sure the following line is added to your package.json file under `scripts`
 
@@ -108,15 +113,15 @@ Example
   }
 ```
 
-### Push code to Heroku
+#### Push code to Heroku
 
 	git push heroku master
 
-### (Optional) Set Up Auto-Deploy From Github
+#### (Optional) Set Up Auto-Deploy From Github
 TODO: Fill in instructions.
 
 
-### Setup Heroku-Postgres Hobby-Dev Database
+#### Setup Heroku-Postgres Hobby-Dev Database
 
 	heroku addons:create heroku-postgresql:hobby-dev
 
