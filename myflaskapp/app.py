@@ -5,7 +5,7 @@ from flask import Flask, render_template, got_request_exception
 import rollbar
 import rollbar.contrib.flask
 
-from myflaskapp import commands, public, user
+from myflaskapp import commands, auth, user, public
 from myflaskapp.extensions import (bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager,
                                    migrate, webpack, mail)
 from myflaskapp.settings import ProdConfig
@@ -49,14 +49,13 @@ def register_extensions(app):
     migrate.init_app(app, db)
     webpack.init_app(app)
     mail.init_app(app)
-    return None
 
 
 def register_blueprints(app):
     """Register Flask blueprints."""
-    app.register_blueprint(public.views.blueprint)
-    app.register_blueprint(user.views.blueprint)
-    return None
+    app.register_blueprint(auth.views.auth)
+    app.register_blueprint(user.views.users)
+    app.register_blueprint(public.views.public)
 
 
 def register_errorhandlers(app):
@@ -68,7 +67,6 @@ def register_errorhandlers(app):
         return render_template('{0}.html'.format(error_code)), error_code
     for errcode in [401, 404, 500]:
         app.errorhandler(errcode)(render_error)
-    return None
 
 
 def register_shellcontext(app):
