@@ -10,14 +10,16 @@ from .models import User
 class RegisterForm(FlaskForm):
     """Register form."""
 
-    username = StringField('Username',
+    username = StringField(label='Username',
                            validators=[DataRequired(), Length(min=3, max=25)])
-    email = StringField('Email',
+    email = StringField(label='Email',
                         validators=[DataRequired(), Email(), Length(min=6, max=40)])
-    password = PasswordField('Password',
+    password = PasswordField(label='Password',
                              validators=[DataRequired(), Length(min=6, max=40)])
-    confirm = PasswordField('Verify password',
-                            [DataRequired(), EqualTo('password', message='Passwords must match')])
+    confirm = PasswordField(label='Verify password',
+                            validators=[DataRequired(),
+                                        EqualTo('password', message='Passwords must match')])
+    submit = SubmitField('Register')
 
     def __init__(self, *args, **kwargs):
         """Create instance."""
