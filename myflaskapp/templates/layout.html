@@ -9,9 +9,9 @@
   <meta charset="utf-8">
 
   <title>{% block page_title %}
-  
+
     My Flask App
-  
+
     {% endblock %}
   </title>
   <meta name="description" content="{% block meta_description %}{% endblock %}">
@@ -27,7 +27,7 @@
 </head>
 <body class="{% block body_class %}{% endblock %}">
 {% block body %}
-{% with form=form  %}
+{% with form=nav_form  %}
 {% include "nav.html" %}
 {% endwith %}
 

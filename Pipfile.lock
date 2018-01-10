@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a51a823f48b95bf45d40a8ed7826a53f38cfaa8d7931978f084b6bfe7426185a"
+            "sha256": "01891cfcac87c4d2cd0e9ed7ae9109d762d586331eae5c0e21151a955815a20b"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -164,6 +164,12 @@
             ],
             "version": "==0.4.1"
         },
+        "flask-mail": {
+            "hashes": [
+                "sha256:22e5eb9a940bf407bcf30410ecc3708f3c56cc44b29c34e1726fe85006935f41"
+            ],
+            "version": "==0.9.1"
+        },
         "flask-migrate": {
             "hashes": [
                 "sha256:493f9b3795985b9b4915bf3b7d16946697f027b73545384e7d9e3a79f989d2fe",
@@ -271,6 +277,13 @@
                 "sha256:99a8ca03e29851d96616ad0404b4aad7d9ee16f25c9f9708a11faf2810f7b226"
             ],
             "version": "==2.18"
+        },
+        "pyjwt": {
+            "hashes": [
+                "sha256:a4e5f1441e3ca7b382fd0c0b416777ced1f97c64ef0c33bfa39daf38505cfd2f",
+                "sha256:500be75b17a63f70072416843dc80c8821109030be824f4d14758f114978bae7"
+            ],
+            "version": "==1.5.3"
         },
         "python-dateutil": {
             "hashes": [

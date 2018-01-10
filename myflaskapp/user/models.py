@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 """User models."""
 import datetime as dt
+from time import time
 
+from flask import current_app
 from flask_login import UserMixin
+import jwt
 
 from myflaskapp.database import Column, Model, SurrogatePK, db, reference_col, relationship
 from myflaskapp.extensions import bcrypt
@@ -63,3 +66,18 @@ class User(UserMixin, SurrogatePK, Model):
     def __repr__(self):
         """Represent instance as a unique string."""
         return '<User({username!r})>'.format(username=self.username)
+
+    def get_reset_password_token(self, expires_in=600):
+        return jwt.encode(
+            {'reset_password': self.id, 'exp': time() + expires_in},
+            current_app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+
+    @staticmethod
+    def verify_reset_password_token(token):
+        try:
+            id = jwt.decode(token, current_app.config['SECRET_KEY'],
+                            algorithms=['HS256'])['reset_password']
+            print(id)
+        except:
+            return
+        return User.query.get(id)
