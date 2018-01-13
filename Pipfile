@@ -7,28 +7,29 @@ name = "pypi"
 
 [packages]
 
-Flask = "*"
-Flask-Bcrypt = "*"
-Flask-Caching = "*"
-Flask-DebugToolbar = "*"
-Flask-Login = "*"
-Flask-Mail = "*"
-Flask-Migrate = "*"
-Flask-SQLAlchemy = "*"
-Flask-Webpack = "*"
-Flask-WTF = "*"
+flask = "*"
+flask-bcrypt = "*"
+flask-caching = "*"
+flask-debugtoolbar = "*"
+flask-login = "*"
+flask-mail = "*"
+flask-migrate = "*"
+flask-sqlalchemy = "*"
+flask-webpack = "*"
+flask-wtf = "*"
 gunicorn = "*"
 "psycopg2" = "*"
-PyJWT = "*"
+pyjwt = "*"
 rollbar = "*"
+flask-moment = "*"
 
 
 [dev-packages]
 
-factory_boy = "*"
+factory-boy = "*"
 pylint = "*"
 pytest = "*"
-WebTest = "*"
+webtest = "*"
 
 
 [requires]
