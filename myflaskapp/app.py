@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """The app module, containing the app factory function."""
 from flask import Flask, render_template, got_request_exception
+from flask_mail import email_dispatched
 
 import rollbar
 import rollbar.contrib.flask
@@ -34,6 +35,12 @@ def create_app(config_object=ProdConfig):
                          allow_logging_basic_config=False)
 
             got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
+
+    def log_email_message(message, app):
+        app.logger.debug(message.body)
+
+    if app.config['DEBUG']:
+        email_dispatched.connect(log_email_message)
 
     return app
 
