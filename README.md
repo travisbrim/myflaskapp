@@ -3,34 +3,46 @@ My Flask App
 
 A flasky app.
 
-Quickstart
-----------
+Prerequisites
+-------------
+### Pyenv
+This project uses [pipenv](https://github.com/pypa/pipenv) to manage requirements.
 
-First, set your app's secret key as an environment variable. For
-example, add the following to `.bashrc` or `.bash_profile`.
+From the pipenv project readme:
+
+>Pipenv — the officially recommended Python packaging tool from Python.org, free (as in freedom).
+
+>Pipenv is a tool that aims to bring the best of all packaging worlds (bundler, composer, npm, cargo, yarn, etc.) to the Python world. Windows is a first–class citizen, in our world.
+
+>It automatically creates and manages a virtualenv for your projects, as well as adds/removes packages from your Pipfile as you install/uninstall packages. It also generates the ever–important Pipfile.lock, which is used to produce deterministic builds.
+
+Install with pip
 
 ```bash
-export MYFLASKAPP_SECRET='something-really-secret'
+pip install pipenv
 ```
 
-Run the following commands to bootstrap your environment :
+Installation
+----------
+
+Run the following commands to setup your environment :
 
     git clone https://github.com/austinmcconnell/myflaskapp
     cd myflaskapp
-    pip install -r requirements/dev.txt
+    pipenv install --dev
     npm install
     npm start  # run the webpack dev server and flask server using concurrently
 
-You will see a pretty welcome screen.
+You will see a pretty welcome screen [here](http://localhost:5000)
 
-Generate a secret key like this
+### Generate a secret key
+Generate a secret key by opening up a python shell and running this code:
 
 ```python
 import secrets
 secrets.token_hex(20)
 ```
-Take the token from above and use it for the
-Setup an .env file containing the following information
+Take the token from above and place it in a .env file along with the following information:
 
 ```ini
 # Flask
@@ -41,7 +53,11 @@ MYFLASKAPP_SECRET = secret_token_from_above
 # Node
 NODE_ENV=development
 NPM_CONFIG_PRODUCTION=false
+```
 
+This uses a sqlite database by default for local development. If you would like to setup something more powerful (or that matches your production setup), add the following section to your .env file:
+
+```ini
 # Database
 DB_USERNAME=username
 DB_PASSWORD=password
@@ -50,7 +66,7 @@ DB_NAME=port
 ```
 
 Once you have installed your DBMS, run the following to create your
-app\'s database tables and perform the initial migration :
+app\'s database tables and perform the initial migration:
 
     flask db init
     flask db migrate
@@ -58,7 +74,6 @@ app\'s database tables and perform the initial migration :
 
 Deployment To Heroku
 --------------------
-
 
 ### Automatic Deployment
 
