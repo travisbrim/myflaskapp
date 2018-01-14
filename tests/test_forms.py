@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """Test forms."""
 
-from myflaskapp.auth.forms import LoginForm
-from myflaskapp.user.forms import RegisterForm
+from myflaskapp.user.forms import RegisterForm, LoginForm
 
 
 class TestRegisterForm:

@@ -1,7 +1,7 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_user
 
-from myflaskapp.auth.forms import LoginForm
+from myflaskapp.user.forms import LoginForm
 from myflaskapp.utils import flash_errors
 
 public = Blueprint(name='public',  # pylint: disable=invalid-name
