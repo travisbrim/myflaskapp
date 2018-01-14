@@ -29,3 +29,14 @@ def send_password_reset_email(user):
                                          user=user, token=token),
                html_body=render_template('email/reset_password.html',
                                          user=user, token=token))
+
+
+def send_confirm_email(user):
+    token = user.get_confirmation_token()
+    send_email('[My Flask App] Confirm Your Email Address',
+               sender=current_app.config['ADMINS'][0],
+               recipients=[user.email],
+               text_body=render_template('email/confirm_email.txt',
+                                         user=user, token=token),
+               html_body=render_template('email/confirm_email.html',
+                                         user=user, token=token))

@@ -6,6 +6,7 @@ See: http://webtest.readthedocs.org/
 from flask import url_for
 
 from myflaskapp.user.models import User
+from myflaskapp.extensions import mail
 
 from .factories import UserFactory
 
@@ -118,3 +119,20 @@ class TestRegistering:
         res = form.submit()
         # sees error
         assert 'Username already registered' in res
+
+    def test_confirm_email_sent(self, user, testapp):
+        """Confirm a user's email address"""
+        # Goes to registration page
+        with mail.record_messages() as outbox:
+
+            res = testapp.get(url_for('auth.register'))
+
+            form = res.forms['registerForm']
+            form['username'] = 'pandas'
+            form['email'] = 'foo@bar.com'
+            form['password'] = 'secret'
+            form['confirm'] = 'secret'
+
+            res = form.submit()
+
+            assert len(outbox) == 1

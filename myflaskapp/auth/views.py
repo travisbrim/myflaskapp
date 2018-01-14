@@ -3,7 +3,7 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user, current_user
 
-from myflaskapp.email import send_password_reset_email
+from myflaskapp.email import send_password_reset_email, send_confirm_email
 from myflaskapp.extensions import login_manager, db
 from myflaskapp.auth.forms import LoginForm, ResetPasswordRequestForm, ResetPasswordForm
 from myflaskapp.user.forms import RegisterForm
@@ -35,11 +35,13 @@ def register():
     """Register new user."""
     form = RegisterForm(request.form)
     if form.validate_on_submit():
-        User.create(username=form.username.data,
-                    email=form.email.data,
-                    password=form.password.data,
-                    active=True)
-        flash('Thank you for registering. You can now log in.', 'success')
+        user = User.create(username=form.username.data,
+                           email=form.email.data,
+                           password=form.password.data,
+                           active=False)
+        flash('Thank you for registering. Please validate your email '
+              'address before logging in.', 'success')
+        send_confirm_email(user)
         return redirect(url_for('public.home'))
     else:
         flash_errors(form)
@@ -99,3 +101,18 @@ def reset_password(token):
         flash('Your password has been reset.')
         return redirect(url_for('auth.login'))
     return render_template('auth/reset_password.html', form=form)
+
+
+@auth.route('/confirm/<token>', methods=['GET'])
+def confirm_email(token):
+    if current_user.email_confirmed:
+        flash('You have already verified your email address.', 'info')
+        return redirect(url_for('public.home'))
+    user = User.verify_confirmation_token(token)
+    if not user:
+        return redirect(url_for('public.home'))
+    user.confirm_email()
+    user.active = True
+    db.session.commit()
+    flash('Your email has been confirmed.', 'success')
+    return redirect(url_for('public.home'))

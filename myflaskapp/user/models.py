@@ -41,6 +41,8 @@ class User(UserMixin, SurrogatePK, Model):
     last_name = Column(db.String(30), nullable=True)
     active = Column(db.Boolean(), default=False)
     is_admin = Column(db.Boolean(), default=False)
+    email_confirmed = Column(db.Boolean(), nullable=True, default=False)
+    email_confirmed_at = Column(db.DateTime, nullable=True)
 
     def __init__(self, username, email, password=None, **kwargs):
         """Create instance."""
@@ -77,6 +79,24 @@ class User(UserMixin, SurrogatePK, Model):
         try:
             user_id = jwt.decode(token, current_app.config['SECRET_KEY'],
                                  algorithms=['HS256'])['reset_password']
+        except:
+            return
+        return User.query.get(user_id)
+
+    def confirm_email(self):
+        self.email_confirmed = True
+        self.email_confirmed_at = dt.datetime.utcnow()
+
+    def get_confirmation_token(self):
+        return jwt.encode(
+            {'confirm_email': self.id},
+            current_app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+
+    @staticmethod
+    def verify_confirmation_token(token):
+        try:
+            user_id = jwt.decode(token, current_app.config['SECRET_KEY'],
+                                 algorithms=['HS256'])['confirm_email']
         except:
             return
         return User.query.get(user_id)
