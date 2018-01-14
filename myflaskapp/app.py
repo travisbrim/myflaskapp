@@ -62,7 +62,7 @@ def register_extensions(app):
 def register_blueprints(app):
     """Register Flask blueprints."""
     app.register_blueprint(user.views.bp)
-    app.register_blueprint(public.views.public)
+    app.register_blueprint(public.views.bp)
 
 
 def register_errorhandlers(app):
