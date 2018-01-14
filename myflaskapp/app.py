@@ -7,7 +7,7 @@ import rollbar
 import rollbar.contrib.flask
 
 from myflaskapp import commands, user, public
-from myflaskapp.extensions import (bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager,
+from myflaskapp.extensions import (bcrypt, bootstrap, cache, csrf_protect, db, debug_toolbar, login_manager,
                                    migrate, webpack, mail, moment)
 from myflaskapp.settings import ProdConfig
 
@@ -48,6 +48,7 @@ def create_app(config_object=ProdConfig):
 def register_extensions(app):
     """Register Flask extensions."""
     bcrypt.init_app(app)
+    bootstrap.init_app(app)
     cache.init_app(app)
     db.init_app(app)
     csrf_protect.init_app(app)
