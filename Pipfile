@@ -22,6 +22,7 @@ gunicorn = "*"
 pyjwt = "*"
 rollbar = "*"
 flask-moment = "*"
+pytest-cov = "*"
 
 
 [dev-packages]
@@ -29,6 +30,7 @@ flask-moment = "*"
 factory-boy = "*"
 pylint = "*"
 pytest = "*"
+pytest-cov = "*"
 webtest = "*"
 
 
