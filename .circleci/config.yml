@@ -12,23 +12,39 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "pipfile.lock" }}
+          key: deps1-{{ checksum "Pipfile.lock" }}
       - run:
-          name: Install dependencies
+          name: Install Python dependencies
           command: |
             python3 -m venv venv
             . venv/bin/activate
             pip install pipenv
             pipenv install --dev
       - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "pipfile.lock" }}
+          key: deps1-{{ checksum "Pipfile.lock" }}
           paths:
             - "venv"
+      - restore_cache:
+          key: deps1-{{ checksum "package-lock.json" }}
       - run:
-          name: Run linter
+          name: Install Node dependencies
+          command: |
+            - npm install
+
+      - save_cache:
+          key: deps1-{{ checksum "package-lock.json" }}
+          paths:
+            - "node_modules"
+      - run:
+          name: Run Python linter
           command: |
             . venv/bin/activate
             flask lint
+      - run:
+          name: Run Node linter
+          command: |
+            . venv/bin/activate
+            npm run lint
       - run:
           name: Run tests
           command: |
