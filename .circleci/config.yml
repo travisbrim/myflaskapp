@@ -54,6 +54,8 @@ jobs:
             pytest tests --cov myflaskapp --cov-branch --cov-report=html
       - run:
           name: Code coverage
-          command: codecov
+          command: |
+          . venv/bin/activate
+          codecov
       - store_artifacts:
           path: htmlcov/
