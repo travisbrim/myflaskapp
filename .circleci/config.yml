@@ -55,7 +55,7 @@ jobs:
       - run:
           name: Code coverage
           command: |
-          . venv/bin/activate
-          codecov
+            . venv/bin/activate
+            codecov
       - store_artifacts:
           path: htmlcov/
