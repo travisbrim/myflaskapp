@@ -50,10 +50,12 @@ jobs:
           name: Run tests
           command: |
             . venv/bin/activate
-            flask test
+            pytest tests --cov myflaskapp --cov-branch --cov-report=html
       - run:
           name: Code coverage
           command: bash <(curl -s https://codecov.io/bash)
+      - store_artifacts:
+          path: htmlcov/
       - store_artifacts:
           path: test-reports/
           destination: tr1
