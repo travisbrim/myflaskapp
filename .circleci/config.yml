@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:3.6.3
+      - image: circleci/python:3.6.3-node
         environment:
           FLASK_CONFIG: testing
           FLASK_APP: autoapp.py
