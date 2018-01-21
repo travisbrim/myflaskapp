@@ -101,9 +101,10 @@ def reset_password(token):
 
 @bp.route('/confirm/<token>', methods=['GET'])
 def confirm_email(token):
-    if current_user.email_confirmed:
-        flash('You have already verified your email address.', 'info')
-        return redirect(url_for('public.home'))
+    if not current_user.is_anonymous:
+        if current_user.email_confirmed:
+            flash('You have already verified your email address.', 'info')
+            return redirect(url_for('public.home'))
     user = User.verify_confirmation_token(token)
     if not user:
         return redirect(url_for('public.home'))

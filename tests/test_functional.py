@@ -3,11 +3,12 @@
 
 See: http://webtest.readthedocs.org/
 """
+import re
+
 from flask import url_for
 
-from myflaskapp.user.models import User
 from myflaskapp.extensions import mail
-
+from myflaskapp.user.models import User
 from .factories import UserFactory
 
 
@@ -120,8 +121,8 @@ class TestRegistering:
         # sees error
         assert 'Username already registered' in res
 
-    def test_confirm_email_sent(self, user, testapp):
-        """Confirm a user's email address"""
+    def test_confirm_email_sent(self, db, testapp):
+        """Send confirmation email"""
         # Goes to registration page
         with mail.record_messages() as outbox:
 
@@ -136,3 +137,27 @@ class TestRegistering:
             res = form.submit()
 
             assert len(outbox) == 1
+            assert 'Confirm Your Email Address' in outbox[0].subject
+
+    def test_email_confirmation(self, db, testapp):
+        """Confirm a user's email address"""
+        # Goes to registration page
+        with mail.record_messages() as outbox:
+            res = testapp.get(url_for('user.register'))
+
+            form = res.forms['registerForm']
+            form['username'] = 'pandas'
+            form['email'] = 'foo@bar.com'
+            form['password'] = 'secret'
+            form['confirm'] = 'secret'
+
+            res = form.submit()
+
+            body_html = outbox[0].html
+
+        groups = re.search('<a href=\"http://localhost(.*)\">', body_html)
+        confirmation_url = groups[1]
+
+        res = testapp.get(confirmation_url)
+
+        assert User.get_by_id(1).email_confirmed is True
