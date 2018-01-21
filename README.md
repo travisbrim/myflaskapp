@@ -1,6 +1,15 @@
 My Flask App
 ================================
 
+[![CircleCI][circleci_logo]][circleci_link] [![Codecov][codecov_logo]][codecov_link] [![Pyup][pyup_logo]][pyup_link]
+
+[circleci_logo]: https://circleci.com/gh/austinmcconnell/myflaskapp.svg?style=shield
+[circleci_link]: https://circleci.com/gh/austinmcconnell/myflaskapp
+[codecov_logo]: https://codecov.io/gh/austinmcconnell/myflaskapp/branch/master/graph/badge.svg
+[codecov_link]: https://codecov.io/gh/austinmcconnell/myflaskapp
+[pyup_logo]: https://pyup.io/repos/github/austinmcconnell/myflaskapp/shield.svg
+[pyup_link]: https://pyup.io/repos/github/austinmcconnell/myflaskapp/
+
 A flasky app.
 
 Prerequisites
