@@ -1,0 +1,41 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/python:3.6.3
+        environment:
+          FLASK_CONFIG: testing
+          FLASK_APP: autoapp.py
+          FLASK_DEBUG: 1
+          SECRET_TOKEN: super-secret
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "pipfile.lock" }}
+      - run:
+          name: Install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install pipenv
+            pipenv install --dev
+      - save_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "pipfile.lock" }}
+          paths:
+            - "venv"
+      - run:
+          name: Run linter
+          command: |
+            . venv/bin/activate
+            flask lint
+      - run:
+          name: Run tests
+          command: |
+            . venv/bin/activate
+            flask test
+      - store_artifacts:
+          path: test-reports/
+          destination: tr1
+      - store_test_results:
+          path: test-reports/
