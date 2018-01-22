@@ -8,6 +8,8 @@ jobs:
           FLASK_APP: autoapp.py
           FLASK_DEBUG: 1
           SECRET_TOKEN: super-secret
+          NODE_ENV: development
+          NPM_CONFIG_PRODUCTION: false
     working_directory: ~/repo
     steps:
       - checkout
