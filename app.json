@@ -32,7 +32,8 @@
       }
     },
     "rollbar",
-    "papertrail"
+    "papertrail",
+    "mailgun"
   ],
   "buildpacks": [
     {
