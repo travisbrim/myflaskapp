@@ -6,7 +6,7 @@ from flask_mail import email_dispatched
 import rollbar
 import rollbar.contrib.flask
 
-from myflaskapp import commands, user, public
+from myflaskapp import commands, user, public, product
 from myflaskapp.extensions import (bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager,
                                    migrate, webpack, mail, moment)
 from myflaskapp.settings import ProdConfig
@@ -63,6 +63,7 @@ def register_blueprints(app):
     """Register Flask blueprints."""
     app.register_blueprint(user.views.bp)
     app.register_blueprint(public.views.bp)
+    app.register_blueprint(product.views.bp)
 
 
 def register_errorhandlers(app):
