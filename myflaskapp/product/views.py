@@ -31,7 +31,19 @@ def retrieve_products():
 @bp.route('/products/', methods=['POST'])
 @csrf_protect.exempt
 def create_product():
-    Product.create(name=request.json.get('name'), price=request.json.get('price'), description=request.json.get('description'), color=request.json.get('color'))
+
+    if not request.headers['Content-Type'] == 'application/json':
+        return jsonify({'error': 'endpoint expects application/json content-type'}), 415
+
+    if not (request.json.get('name') and request.json.get('price')):
+        return jsonify({'error': 'invalid input data'}), 422
+
+    try:
+        product = Product.create(name=request.json.get('name'), price=request.json.get('price'), description=request.json.get('description'), color=request.json.get('color'))
+    except:
+        return jsonify({'error': 'invalid input data'}), 422
+    else:
+        return jsonify({'data': product.serialize()}), 201
 
 
 
