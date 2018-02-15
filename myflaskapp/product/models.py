@@ -9,3 +9,12 @@ class Product(SurrogatePK, Model):
     description = Column(db.String(80))
     price = Column(db.Numeric(), nullable=False)
     color = Column(db.String(20))
+
+    def serialize(self):
+        return {
+            "name": self.name,
+            "description": self.description,
+            # TODO: introduces the potential for rounding errors
+            "price": float(self.price),
+            "color": self.color
+        }
