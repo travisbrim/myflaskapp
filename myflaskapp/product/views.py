@@ -23,9 +23,10 @@ def retrieve_products():
 
     filter_str = request.args.get('filter')
     if filter_str:
-        products = products.filter(Product.name.ilike(filter_str) | Product.description.ilike(filter_str)).all()
+        filter_str = ''.join(['%',filter_str,'%'])
+        products = products.filter(Product.name.ilike(filter_str) | Product.description.ilike(filter_str))
 
-    return jsonify({'data': [product.serialize() for product in products]}), 200
+    return jsonify({'data': [product.serialize() for product in products.all()]}), 200
 
 
 @bp.route('/products/', methods=['POST'])
