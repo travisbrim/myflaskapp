@@ -2,6 +2,8 @@
 """User views."""
 from flask import Blueprint, jsonify, request
 
+from myflaskapp.extensions import csrf_protect
+
 from myflaskapp.product.models import Product
 
 bp = Blueprint(name='product',  # pylint: disable=invalid-name
@@ -24,6 +26,14 @@ def retrieve_products():
         products = products.filter(Product.name.ilike(filter_str) | Product.description.ilike(filter_str)).all()
 
     return jsonify({'data': [product.serialize() for product in products]}), 200
+
+
+@bp.route('/products/', methods=['POST'])
+@csrf_protect.exempt
+def create_product():
+    Product.create(name=request.json.get('name'), price=request.json.get('price'), description=request.json.get('description'), color=request.json.get('color'))
+
+
 
 @bp.route('/products/<id>', methods=['GET'])
 def retrieve_product(id):
