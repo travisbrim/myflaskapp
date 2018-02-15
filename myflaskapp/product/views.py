@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-"""User views."""
+"""Product views."""
 from flask import Blueprint, jsonify, request
 
 from myflaskapp.extensions import csrf_protect
-
 from myflaskapp.product.models import Product
 
 bp = Blueprint(name='product',  # pylint: disable=invalid-name
                import_name=__name__,
                )
+
 
 @bp.route('/products/', methods=['GET'])
 def retrieve_products():
@@ -23,10 +23,13 @@ def retrieve_products():
 
     filter_str = request.args.get('filter')
     if filter_str:
+        # add wildcard characters before and after the filter term
         filter_str = ''.join(['%',filter_str,'%'])
-        products = products.filter(Product.name.ilike(filter_str) | Product.description.ilike(filter_str))
+        products = products.filter(Product.name.ilike(filter_str) |
+            Product.description.ilike(filter_str))
 
-    return jsonify({'data': [product.serialize() for product in products.all()]}), 200
+    data = [product.serialize() for product in products.all()]
+    return jsonify({'data': data}), 200
 
 
 @bp.route('/products/', methods=['POST'])
@@ -36,11 +39,11 @@ def create_product():
     if not request.headers['Content-Type'] == 'application/json':
         return jsonify({'error': 'endpoint expects application/json content-type'}), 415
 
-    if not (request.json.get('name') and request.json.get('price')):
-        return jsonify({'error': 'invalid input data'}), 422
-
     try:
-        product = Product.create(name=request.json.get('name'), price=request.json.get('price'), description=request.json.get('description'), color=request.json.get('color'))
+        product = Product.create(name=request.json.get('name'),
+                                 price=request.json.get('price'),
+                                 description=request.json.get('description'),
+                                 color=request.json.get('color'))
     except:
         return jsonify({'error': 'invalid input data'}), 422
     else:
