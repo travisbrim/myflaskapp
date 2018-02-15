@@ -10,6 +10,10 @@ class Product(SurrogatePK, Model):
     price = Column(db.Numeric(), nullable=False)
     color = Column(db.String(20))
 
+    def __init__(self, name, price, description=None, color=None, **kwargs):
+        """Create instance."""
+        db.Model.__init__(self, name=name, description=description, price=price, color=color, **kwargs)
+
     def serialize(self):
         return {
             "name": self.name,
